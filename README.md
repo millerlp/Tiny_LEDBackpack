@@ -2,11 +2,13 @@ This library is designed to allow the use of Adafruit 4-digit 7-segment LED back
 with ATtiny85 and ATtiny84 processors (and likely other ATtiny models as well). 
 It is adapted from the Adafruit_LEDBackpack library available at
 http://github.com/adafruit/Adafruit-LED-Backpack-Library
+
 The Adafruit 7-segment LED Backpacks are available here:
 http://www.adafruit.com/category/37_103
 
 
 To use this library, you also need the TinyWireM library, available here:
+
 http://www.scenelight.nl/?wpfb_dl=22 (ATtiny84 and ATtiny85 support)
 
 or here:
