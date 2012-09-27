@@ -83,22 +83,17 @@ void Tiny_LEDBackpack::writeDisplay(void) {
   TinyWireM.beginTransmission(i2c_addr);
   TinyWireM.send((uint8_t)0x00); // start at address 0x00
   for (uint8_t i = 0; i < 5; i++) {
-	  TinyWireM.send(displaybuffer[i]);
-	  TinyWireM.send(0x00);   
+	  TinyWireM.send(displaybuffer[i] & 0xFF); 
+	  TinyWireM.send(displaybuffer[i] >> 8);
   }
   TinyWireM.endTransmission();  
 }
 
 void Tiny_LEDBackpack::clear(void) {
-	TinyWireM.beginTransmission(i2c_addr);
-	TinyWireM.send(0x00); // starting address
-	for(int i = 0; i < 5; i++){
+	for (uint8_t i = 0; i < 5; i++) {
 		displaybuffer[i] = 0;
-		TinyWireM.send(displaybuffer[i]);
-		TinyWireM.send(0x00);
 	}
-	TinyWireM.endTransmission();
-}
+} // call writeDisplay to finish clearing display
 
 Tiny_7segment::Tiny_7segment(void) {
   position = 0;
@@ -197,20 +192,20 @@ size_t Tiny_7segment::write(uint8_t c) {
 void Tiny_7segment::writeDigitRaw(uint8_t d, uint8_t bitmask) {
   if (d > 4) return;
   displaybuffer[d] = bitmask;
-}
+} // call writeDisplay to push data to display
 
 void Tiny_7segment::drawColon(boolean state) {
   if (state)
     displaybuffer[2] = 0xFF;
   else
     displaybuffer[2] = 0;
-}
+} // call writeDisplay to push data to display
 
 void Tiny_7segment::writeDigitNum(uint8_t d, uint8_t num, boolean dot) {
   if (d > 4) return;
 
   writeDigitRaw(d, numbertable[num] | (dot << 7));
-}
+} // call writeDisplay to push data to display
 
 void Tiny_7segment::print(long n, int base)
 {
