@@ -1,0 +1,10 @@
+Tiny_LEDBackpack KEYWORD1
+Tiny_7segment KEYWORD1
+begin KEYWORD2
+setBrightness KEYWORD2
+blinkRate KEYWORD2
+writeDigitRaw KEYWORD2
+writeDigitNum KEYWORD2
+writeDisplay KEYWORD2
+clear	KEYWORD2
+print KEYWORD2
