@@ -2,8 +2,8 @@
   This is a library for our I2C LED Backpacks
 
   Designed specifically to work with the Adafruit LED Matrix backpacks 
-  ----> http://www.adafruit.com/products/
-  ----> http://www.adafruit.com/products/
+  http://www.adafruit.com/category/37_103
+  http://learn.adafruit.com/adafruit-led-backpack/0-dot-56-seven-segment-backpack
 
   These displays use I2C to communicate, 2 pins are required to 
   interface. There are multiple selectable I2C addresses. For backpacks
@@ -37,9 +37,9 @@ static const uint8_t numbertable[] = {
 	0x4F, /* 3 */
 	0x66, /* 4 */
 	0x6D, /* 5 */
-	0x7D, /* 6 */  // 125
-	0x07, /* 7 */ // 7
-	0x7F, /* 8 */ //  127
+	0x7D, /* 6 */  
+	0x07, /* 7 */ 
+	0x7F, /* 8 */ 
 	0x6F, /* 9 */
 	0x77, /* a */
 	0x7C, /* b */
