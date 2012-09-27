@@ -19,8 +19,11 @@ http://arduino.cc/playground/Code/USIi2c
 
 for an introduction to what the TinyWireM library does.
 
-Install the TinyWireM library and this Tiny_LEDBackpack library in your 
-Arduino/libraries/ directory, then restart the Arduino IDE. The Tiny_LEDBackpack
+Install the TinyWireM library in your arduino-1.0.1/libraries/ directory.
+
+Download the contents of this repository and install them in a directory 
+called Tiny_LEDBackpack in your arduino-1.0.1/libraries/ directory.
+Then restart the Arduino IDE. The Tiny_LEDBackpack
 library includes an example sketch SevenSegTest_tiny that illustrates the use
 of the library. 
 
