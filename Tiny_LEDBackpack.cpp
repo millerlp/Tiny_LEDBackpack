@@ -18,7 +18,7 @@
   BSD license, all text above must be included in any redistribution
   
   Modified to use TinyWireM library 2012-09-26 Luke Miller
-  For using the LED Backpack with an ATtiny 85 or 84 processor. This
+  For using the LED Backpack with the ATtiny 85 or 84 processors. This
   requires a different I2C library, TinyWireM, to communicate with
   the LED Backpack. 
   TinyWireM library obtained from http://www.scenelight.nl/?wpfb_dl=22
