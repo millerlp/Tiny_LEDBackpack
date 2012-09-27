@@ -4,6 +4,7 @@
   It requires the TinyWireM library for I2C communication
   and the Tiny_LEDBackpack library for the various display
   functions.  
+  TinyWireM library obtained from http://www.scenelight.nl/?wpfb_dl=22
   
    NOTE: Tested successfully on ATtiny85, using 4700ohm pull-up
    resistors on SCL and SDA lines. Tested using 1MHz internal clock.
@@ -17,7 +18,16 @@
    
    Tested with and without AVRISP mkII hooked up, works fine both
    ways.
-  
+   
+   Additionally tested on ATtiny84 using 8MHz internal clock. To
+   enable this functionality, you must alter the USI_TWI_Master.h
+   file in the TinyWireM library to run at 8MHz. Search for the 
+   line near the top that reads:
+   #define SYS_CLK   1000.0  // [kHz]	Default for ATtiny2313
+   and change the 1000 to 8000. 
+   
+   Also tested with 10k ohm pull-up resistors on SDA and SCL lines.
+   
   This demo also uses a regular LED attached to 
   ATtiny84 physical pin 2 (Arduino pin 10) to show 
   that the sketch is running. 
@@ -41,6 +51,7 @@ void setup() {
   sevenseg.begin(i2c_addr); // initialize HT16K33 controller
 //  sevenseg.blinkRate(2); // set blink rate (0,1,2 or 3)
   sevenseg.clear(); // clear all digits on display
+  sevenseg.writeDisplay();
   delay(1000);
 }
 
@@ -60,6 +71,7 @@ void loop(){
   sevenseg.writeDisplay(); // push data to display
   delay(500);
   sevenseg.clear(); // clear display before writing raw digit
+  sevenseg.writeDisplay();
   // The clear command doesn't need a writeDisplay call afterwards
   
   // Example of writing a single digit to a specified position on the
@@ -156,14 +168,16 @@ void loop(){
 //  sevenseg.writeDigitRaw(0,128); // 128 = "." decimal
 //  sevenseg.writeDigitRaw(0,0); // blank
 //  sevenseg.writeDigitRaw(2,255); // 255 = ":"  colon, always position 2
-//  ****Always follow a writeDigitRaw command with the*****
-//  sevenseg.writeDisplay(); command to push the data to the
-//  display. 
-  // Example of using writeDigitRaw to write numbers or characters
+//  ****Always follow a writeDigitRaw command with the
+//  writeDisplay(); command to push the data to the
+//  display.*****
+//  sevenseg.writeDisplay(); // push data to display
+
+  // Example using writeDigitRaw to write numbers or characters
   // to specific digits on the display. This spells 'run'.
-  sevenseg.writeDigitRaw(0,80); // specify position and code
-  sevenseg.writeDigitRaw(1,28); 
-  sevenseg.writeDigitRaw(3,84);
+  sevenseg.writeDigitRaw(0,80); // specify position and code, 80 = 'r'
+  sevenseg.writeDigitRaw(1,28); // specify position and code, 28 = 'u'
+  sevenseg.writeDigitRaw(3,84); // specify position and code, 84 = 'n'
   sevenseg.writeDisplay(); // push data to display
   delay(1000);
 
@@ -175,10 +189,11 @@ void loop(){
   // segments are conveniently set up with bit mask values
   // that are increasing multiples of 2.
   sevenseg.clear(); 
+  sevenseg.writeDisplay();
   for (int wait = 0; wait < 3; wait++) { // repeat multiple times
     for (int i = 1; i < 64; i *= 2) {
       sevenseg.writeDigitRaw(0,i);
-      sevenseg.writeDisplay();
+      sevenseg.writeDisplay(); // push data to display
       delay(100);
     }
   }
@@ -189,10 +204,10 @@ void loop(){
     for (int i = 0; i < 5; i++) {
      if (i == 2) i++;  // This is needed to skip over position 2
      sevenseg.writeDigitRaw(i,128); // light the decimal at position i
-     sevenseg.writeDisplay();
+     sevenseg.writeDisplay();  // push data to display
      delay(100);
      sevenseg.writeDigitRaw(i,0); // clear the decimal at position i
-     sevenseg.writeDisplay();
+     sevenseg.writeDisplay(); // push data to display
     }
   }
   
