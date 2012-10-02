@@ -1,6 +1,8 @@
 /* SevenSegTest_tiny
   This is a demonstration of using the Adafruit 4-digit 
   7-segment LED backpack with an ATtiny uC. 
+  http://www.adafruit.com/category/37_103 
+  
   It requires the TinyWireM library for I2C communication
   and the Tiny_LEDBackpack library for the various display
   functions.  
@@ -35,10 +37,8 @@
 #include <TinyWireM.h>
 #include <Tiny_LEDBackpack.h>
 
-
 Tiny_7segment sevenseg = Tiny_7segment();
 int led = 10; // indicator LED for ATtiny84. Connect with 100-470ohm resistor
-
 
 #define i2c_addr 0x70 // stock address for Adafruit 7-segment LED backpack
 
@@ -51,7 +51,7 @@ void setup() {
   sevenseg.begin(i2c_addr); // initialize HT16K33 controller
 //  sevenseg.blinkRate(2); // set blink rate (0,1,2 or 3)
   sevenseg.clear(); // clear all digits on display
-  sevenseg.writeDisplay();
+  sevenseg.writeDisplay(); // push data to display
   delay(1000);
 }
 
@@ -60,33 +60,34 @@ void loop(){
   sevenseg.writeDisplay(); // push data to display
   delay(500);
   // Example of writing a multi-digit integer to the display
-  sevenseg.print(4203); // print integer
+  sevenseg.print(1234); // print integer
   sevenseg.writeDisplay(); // push data to display
   delay(500);
   // Example of writing a multi-digit floating point number
   // to the display. The 2nd argument specifies 
   // how many digits to display after the decimal. Omit the 
   // 2nd argument for integer values. 
-  sevenseg.print(12.2, 1); // print a floating point number
+  sevenseg.print(56.7, 1); // print a floating point number
   sevenseg.writeDisplay(); // push data to display
   delay(500);
   sevenseg.clear(); // clear display before writing raw digit
   sevenseg.writeDisplay();
-  // The clear command doesn't need a writeDisplay call afterwards
   
   // Example of writing a single digit to a specified position on the
   // display. The 1st argument is the digit position (0,1,3,4), 2nd
   // value is the numeric value to display (0-9, a-F), and the 3rd 
   // value is whether to show the decimal point. Note that if you
   // don't clear the display ahead of time, any previously displayed 
-  // values in other digits will remain visible. 
+  // values in other digits will remain visible. Digit position 2 is
+  // the colon, so we don't try to write numbers to it. 
   sevenseg.writeDigitNum(3, 9, true); // position 3, value 9, show decimal)
   sevenseg.writeDisplay(); // push the data to the display
   delay(500);
 
   //-----------------------------------------------------------------
   // Example of a hard-coded write using the
-  // TinyWireM library by itself. 
+  // TinyWireM library by itself. This doesn't use the Tiny_LEDBackpack
+  // library at all. 
 //  delay(100);
 //  TinyWireM.beginTransmission(0x70); // device address
 //  TinyWireM.send(0x02); // digit address (0x00, 0x02, 0x06, 0x08)
@@ -132,7 +133,7 @@ void loop(){
   // The binary representation would be b01110111.
   //           The bit positions are -->b76543210
   // The corresponding integer value is 119 for A. 
-  // Use a binary to decimal calculator to convert.
+  // Use a binary-to-decimal calculator to convert.
   // Below is a list of codes for letters and symbols
 //  sevenseg.writeDigitRaw(0,119); // 119 = "A"
 //  sevenseg.writeDigitRaw(0,124); // 124 = "b"
@@ -168,9 +169,11 @@ void loop(){
 //  sevenseg.writeDigitRaw(0,128); // 128 = "." decimal
 //  sevenseg.writeDigitRaw(0,0); // blank
 //  sevenseg.writeDigitRaw(2,255); // 255 = ":"  colon, always position 2
-//  ****Always follow a writeDigitRaw command with the
-//  writeDisplay(); command to push the data to the
-//  display.*****
+/* *********************
+   Always follow a writeDigitRaw command with the
+   writeDisplay(); command to push the data to the
+   display.
+************************ */
 //  sevenseg.writeDisplay(); // push data to display
 
   // Example using writeDigitRaw to write numbers or characters
