@@ -17,11 +17,32 @@
   Written by Limor Fried/Ladyada for Adafruit Industries.  
   BSD license, all text above must be included in any redistribution
   
+  **************
   Modified to use TinyWireM library 2012-09-26 Luke Miller
-  For using the LED Backpack with the ATtiny 85 or 84 processors. This
+  For using the Adafruit LED Backpack with the ATtiny 85 or 84 processors. This
   requires a different I2C library, TinyWireM, to communicate with
-  the LED Backpack. 
-  TinyWireM library obtained from http://www.scenelight.nl/?wpfb_dl=22
+  the LED Backpack, compared to the stock Adafruit_LEDBackpack library that
+  is designed to work with ATMEGA-based Arduinos like the Uno.
+  
+  The initial setup for getting ATtiny processors working with Arduino 1.0.1
+  was based on the instructions for High-Low Tech:
+  http://hlt.media.mit.edu/?p=1695
+  . 
+  The TinyWireM was library obtained from:
+   http://www.scenelight.nl/?wpfb_dl=22
+  
+  Tested on ATtiny85 and ATtiny84 processors, using the modified TinyWireM
+  library linked above that contains includes for both the 25/45/85 family 
+  of ATtiny and 24/44/84 family of ATtiny processors. Tested under 
+  Arduino IDE 1.0.1. 
+  
+  If you run into PCREL errors when your sketch size exceeds 4kB, use the fix
+  provided by Tom Carpenter here:
+  http://arduino.cc/forum/index.php/topic,116674.msg878023.html#msg878023
+  
+  Removed the 8x8 LED matrix code from the original Adafruit library because 
+  I was unable to test it on a ATtiny. Only the 7-Segment LED displays have 
+  been tested.
   
   
  ****************************************************/
